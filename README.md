@@ -5,7 +5,16 @@ aprendizaje automático. Dos procesos independientes:
 
 - **Dashboard Streamlit** (`app.py`): carga datos (sintéticos, CSV o
   PCAP/PCAPNG), los normaliza a nueve variables y entrena/evalúa dos
-  modelos (XGBoost supervisado, Isolation Forest no supervisado).
+  modelos (XGBoost supervisado, Isolation Forest no supervisado). Tiene
+  dos vistas, elegibles desde la barra lateral ("Vista"):
+  - **SOC (analista)**: las seis pestañas técnicas completas.
+  - **Gerencia / Dirección**: una sola pantalla con un semáforo de
+    riesgo (Normal/Elevado/Crítico) y tres indicadores en lenguaje
+    llano, pensada para alguien sin formación técnica que solo necesita
+    saber si hay un problema o no.
+  El semáforo (`risk.py`) usa un puntaje robusto (mediana + MAD, no
+  media/desviación estándar) sobre PPS y bytes/s -- es una señal rápida
+  de "algo se ve raro", no un reemplazo de los modelos entrenados.
 - **API de demostración** (`dosguard/service.py`): expone un endpoint
   ficticio de solo lectura con límite de solicitudes, para generar tráfico
   HTTP que la pestaña "Servicio API" del dashboard pueda analizar.
